@@ -9,7 +9,7 @@ In order for canable to communicate to ROS nodes within WSL, the following setup
 - usbipd bind --busid {check the bus id within the list, e.g. 1-4}
 - usbipd attach --wsl --busid {again same bus id} --auto-attach
 
-3. Open WSL
+2. Open WSL
 - lsusb
 - sudo modprobe gs_usb
 
