@@ -17,7 +17,15 @@ In order for canable to communicate to ROS nodes within WSL, the following setup
 1. Load the module: sudo modprobe vcan
 2. Create the interface: sudo ip link add dev vcan0 type vcan
 3. Bring it up: sudo ip link set up vcan0
-4. Check it: ip link show vcan0 should show UP.
+4. Check it: ip link show vcan0 should show UP
+
+## Setup can within Docker Container inside WSL for FS-AI code1
+1. In WSL terminal, check ip link show lists the CANable as can0
+2. In WSL terminal, docker ps gives the container name; docker inspect -f '{{.State.Pid}}' <name> gives its PID
+3. In WSL terminal, sudo ip link set can0 netns <PID> moves the adapter into the container
+4. Now within container, sudo ip link set can0 up type can bitrate 500000
+
+This should now start can0.
 
 ## Setup
 Install libsub 1.0 binaries to be able to use the pyusb library, store dll in System32 folder
