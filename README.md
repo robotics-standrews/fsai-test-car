@@ -36,3 +36,17 @@ Install libsub 1.0 binaries to be able to use the pyusb library, store dll in Sy
 2. In WSL terminal, run the following:
 - Get CAN to start listening at 500 kbit/s: sudo ip link set can0 up type can bitrate 500000
 - Send messages: candump can0
+
+## Errors/Fixes
+
+On Teensy:
+```cpp
+Opening Teensy Loader...
+Unable find Teensy Loader.  (p)  Is the Teensy Loader application running?
+Is a firewall (eg, ZoneAlarm) blocking localhost communication?
+quitexit status 1
+
+Compilation error: exit status 1
+```
+
+
