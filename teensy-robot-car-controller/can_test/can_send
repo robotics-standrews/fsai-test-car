@@ -1,0 +1,38 @@
+/*
+// can frames sent 
+    can_send(&AI2VCU_Status) -
+        AI2VCU_HANDSHAKE_BIT: bit to check communication between the AI and VCU 
+                    0 = off
+                    1 = on 
+        AI2VCU_ESTOP_REQUEST: AI request for vehcile emergency stop
+                        1 - estop requested -> Torque for rear and front = 0; Brake pressure = 100%; mission status = ? 
+                        0 = no estop requested  
+        AI2VCU_MISSION_STATUS: for the VCU to determine which autonomous driving state
+                        0 = not selected 
+                        1 = mission selected
+                        2 = running
+                        3 = finished 
+        AI2VCU_DIRECTION_REQUEST: 
+                        0 - neutral 
+                        1 - forward
+       AI2VCU_LAP_COUNTER: current lap number completed 
+       AI2VCU_CONES_COUNT_ACTUAL: number of cones detected in frame 
+       AI2VCU_CONES_COUNT_ALL: running counter of total cones detected 
+       AI2VCU_VEH_SPEED_ACTUAL_kmh: speed vehicle going at 
+       AI2VCU_VEH_SPEED_DEMAND_kmh: speed at which it needs to go at 
+						
+	can_send(&AI2VCU_Drive_F) - 
+        AI2VCU_FRONT_AXLE_TRQ_REQUEST_raw: requested absolute front axle torque (motor torque x gear ratio, range - 0,195; torque positive (driving), negative when braking will depend on motor speed limit) -> change torque of rear axle 
+        AI2VCU_FRONT_MOTOR_SPEED_MAX_rpm:  maximum motor speed range is 0,4000 ->  change speed of front motor
+     
+	can_send(&AI2VCU_Drive_R) - 
+        AI2VCU_REAR_AXLE_TRQ_REQUEST_raw: requested absolute rear axle torque (motor torque x gear ratio, range : 0,195) -> change torque of rear axle 
+        AI2VCU_REAR_MOTOR_SPEED_MAX_rpm: maximum motor speed range is 0,4000 -> change speed of rear motor
+
+	can_send(&AI2VCU_Steer) - 
+        AI2VCU_STEER_REQUEST_raw: Steer request degree range is (-21.0, 21.0) -> postive turns the front wheels left 
+
+	can_send(&AI2VCU_Brake) - 
+        AI2VCU_HYD_PRESS_F_REQ_raw: Hydraulic pressure request for front axle, range is (0 - 100) -> TBD
+       AI2VCU_HYD_PRESS_R_REQ_raw: Hydraulic pressure request for rear axle, range is (0 - 100) -> TBD
+*/
