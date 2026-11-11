@@ -60,6 +60,18 @@ enum EBS_Status {
     EBS_TRIGGERED = 3,
 };
 
+enum Mission_Status {
+    MISSION_STATUS_NOT_SELECTED = 0,
+    MISSION_STATUS_SELECTED = 1,
+    MISSION_STATUS_RUNNING = 2,
+    MISSION_STATUS_FINISHED = 3,
+};
+
+enum Direction{
+    DIRECTION_NEUTRAL = 0,
+    DIRECTION_FORWARD = 1,
+    DIRECTION_REVERSE = 2,
+};
 
 // VCU and powertrain status reporting to the AI computer
 struct Frame_VCU2AI_Status {
@@ -137,5 +149,52 @@ struct Frame_VCU2AI_Wheel_Counts {
     int rear_left_pulse_count;
     int rear_right_pulse_count;
 };
+
+struct Frame_AI2VCU_Status {
+    bool handshake;
+    bool estop_request;
+    Mission_Status mission_status;
+    Direction direction_request;
+    int lap_counter;
+    int cones_count_actual;
+    int cones_count_all;
+    int vehicle_speed_actual;
+    int vehicle_speed_demand;
+};
+
+struct Frame_AI2VCU_Drive_F {
+    float requested_torque;
+    // in RPM
+    int motor_speed_max;
+};
+
+struct Frame_AI2VCU_Drive_R {
+    float requested_torque;
+    // in RPM
+    int motor_speed_max;
+};
+
+struct Frame_AI2VCU_Steer {
+    float requested_angle;
+};
+
+struct Frame_AI2VCU_Brake {
+    float requested_front_brake_pressure;
+    float requested_rear_brake_pressure;
+};
+
+void frame_encode_vcu2ai_status(CAN_Message_Raw* raw, Frame_VCU2AI_Status* msg);
+void frame_encode_vcu2ai_drive_f(CAN_Message_Raw* raw, Frame_VCU2AI_Drive_F* msg);
+void frame_encode_vcu2ai_drive_r(CAN_Message_Raw* raw, Frame_VCU2AI_Drive_R* msg);
+void frame_encode_vcu2ai_steer(CAN_Message_Raw* raw, Frame_VCU2AI_Steer* msg);
+void frame_encode_vcu2ai_brake(CAN_Message_Raw* raw, Frame_VCU2AI_Brake* msg);
+void frame_encode_vcu2ai_speeds(CAN_Message_Raw* raw, Frame_VCU2AI_Speeds* msg);
+void frame_encode_vcu2ai_wheel_counts(CAN_Message_Raw* raw, Frame_VCU2AI_Wheel_Counts* msg);
+
+void frame_decode_ai2vcu_status(Frame_AI2VCU_Status* msg, CAN_Message_Raw* raw);
+void frame_decode_ai2vcu_drive_f(Frame_AI2VCU_Drive_F* msg, CAN_Message_Raw* raw);
+void frame_decode_ai2vcu_drive_r(Frame_AI2VCU_Drive_R* msg, CAN_Message_Raw* raw);
+void frame_decode_ai2vcu_steer(Frame_AI2VCU_Steer* msg, CAN_Message_Raw* raw);
+void frame_decode_ai2vcu_brake(Frame_AI2VCU_Brake* msg, CAN_Message_Raw* raw);
 
 #endif
